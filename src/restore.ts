@@ -14,7 +14,7 @@ async function run(): Promise<void> {
             utils.setCacheHitOutput(false);
             return;
         }
-
+        core.info(core.getInput(Inputs.SkipRestore));
         // Validate inputs, this can cause task failure
         if (!utils.isValidEvent()) {
             utils.logWarning(

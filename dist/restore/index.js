@@ -48972,7 +48972,7 @@ function run() {
         try {
             if (!utils.isCacheFeatureAvailable() || core.getInput(constants_1.Inputs.SkipRestore) === 'yes') {
                 if (core.getInput(constants_1.Inputs.SkipRestore) === 'yes') {
-                    core.info("Skipping restore of cache as skip-restore is set to " + core.getInput(constants_1.Inputs.SkipSave));
+                    core.info("Skipping restore of cache as skip-restore is set to " + core.getInput(constants_1.Inputs.SkipRestore));
                 }
                 utils.setCacheHitOutput(false);
                 return;

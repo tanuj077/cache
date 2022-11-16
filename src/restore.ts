@@ -8,7 +8,7 @@ async function run(): Promise<void> {
     try {
         if (!utils.isCacheFeatureAvailable() || core.getInput(Inputs.SkipRestore)==='yes') {
             if(core.getInput(Inputs.SkipRestore)==='yes'){
-                core.info("Skipping restore of cache as skip-restore is set to "+ core.getInput(Inputs.SkipSave));
+                core.info("Skipping restore of cache as skip-restore is set to "+ core.getInput(Inputs.SkipRestore));
             }
             utils.setCacheHitOutput(false);
             return;

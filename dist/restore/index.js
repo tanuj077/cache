@@ -4948,6 +4948,7 @@ var Inputs;
     Inputs["RestoreKeys"] = "restore-keys";
     Inputs["UploadChunkSize"] = "upload-chunk-size";
     Inputs["SkipSave"] = "skip-save";
+    Inputs["SkipRestore"] = "skip-restore";
 })(Inputs = exports.Inputs || (exports.Inputs = {}));
 var Outputs;
 (function (Outputs) {
@@ -48969,7 +48970,10 @@ const utils = __importStar(__webpack_require__(443));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            if (!utils.isCacheFeatureAvailable()) {
+            if (!utils.isCacheFeatureAvailable() || core.getInput(constants_1.Inputs.SkipRestore) === 'yes') {
+                if (core.getInput(constants_1.Inputs.SkipRestore) === 'yes') {
+                    core.info("Skipping restore of cache as skip-restore is set to " + core.getInput(constants_1.Inputs.SkipSave));
+                }
                 utils.setCacheHitOutput(false);
                 return;
             }

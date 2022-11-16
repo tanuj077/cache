@@ -4948,6 +4948,7 @@ var Inputs;
     Inputs["RestoreKeys"] = "restore-keys";
     Inputs["UploadChunkSize"] = "upload-chunk-size";
     Inputs["SkipSave"] = "skip-save";
+    Inputs["SkipRestore"] = "skip-restore";
 })(Inputs = exports.Inputs || (exports.Inputs = {}));
 var Outputs;
 (function (Outputs) {
@@ -47292,7 +47293,7 @@ function run() {
         try {
             if (!utils.isCacheFeatureAvailable() || core.getInput(constants_1.Inputs.SkipSave) === 'yes') {
                 if (core.getInput(constants_1.Inputs.SkipSave) === 'yes') {
-                    utils.logWarning("Not saving the cache as skip-save is: " + core.getInput(constants_1.Inputs.SkipSave));
+                    core.info("Not saving the cache as skip-save is: " + core.getInput(constants_1.Inputs.SkipSave));
                 }
                 return;
             }

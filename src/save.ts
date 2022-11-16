@@ -11,7 +11,10 @@ process.on("uncaughtException", e => utils.logWarning(e.message));
 
 async function run(): Promise<void> {
     try {
-        if (!utils.isCacheFeatureAvailable()) {
+        if (!utils.isCacheFeatureAvailable() || core.getInput(Inputs.SkipSave)==='yes') {
+            if(core.getInput(Inputs.SkipSave)==='yes'){
+                utils.logWarning("Not saving the cache as skip-save is: "+ core.getInput(Inputs.SkipSave))
+            }
             return;
         }
 

@@ -4947,6 +4947,7 @@ var Inputs;
     Inputs["Path"] = "path";
     Inputs["RestoreKeys"] = "restore-keys";
     Inputs["UploadChunkSize"] = "upload-chunk-size";
+    Inputs["SkipSave"] = "skip-save";
 })(Inputs = exports.Inputs || (exports.Inputs = {}));
 var Outputs;
 (function (Outputs) {
@@ -47289,7 +47290,10 @@ process.on("uncaughtException", e => utils.logWarning(e.message));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            if (!utils.isCacheFeatureAvailable()) {
+            if (!utils.isCacheFeatureAvailable() || core.getInput(constants_1.Inputs.SkipSave) === 'yes') {
+                if (core.getInput(constants_1.Inputs.SkipSave) === 'yes') {
+                    utils.logWarning("Not saving the cache as skip-save is: " + core.getInput(constants_1.Inputs.SkipSave));
+                }
                 return;
             }
             if (!utils.isValidEvent()) {

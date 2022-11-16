@@ -47291,7 +47291,7 @@ process.on("uncaughtException", e => utils.logWarning(e.message));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            core.info(core.getInput(constants_1.Inputs.SkipSave));
+            core.info(String(core.getInput(constants_1.Inputs.SkipSave) === null) + "...." + String(core.getInput(constants_1.Inputs.SkipSave) === ''));
             if (!utils.isCacheFeatureAvailable() || core.getInput(constants_1.Inputs.SkipSave) === 'yes') {
                 if (core.getInput(constants_1.Inputs.SkipSave) === 'yes') {
                     core.info("Not saving the cache as skip-save is: " + core.getInput(constants_1.Inputs.SkipSave));

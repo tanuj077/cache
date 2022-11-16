@@ -6,10 +6,7 @@ import * as utils from "./utils/actionUtils";
 
 async function run(): Promise<void> {
     try {
-        if (!utils.isCacheFeatureAvailable() || core.getInput(Inputs.SkipRestore)==='yes') {
-            if(core.getInput(Inputs.SkipRestore)==='yes'){
-                core.info("Skipping restore of cache as skip-restore is set to "+ core.getInput(Inputs.SkipRestore));
-            }
+        if (!utils.isCacheFeatureAvailable()) {
             utils.setCacheHitOutput(false);
             return;
         }
@@ -25,6 +22,11 @@ async function run(): Promise<void> {
 
         const primaryKey = core.getInput(Inputs.Key, { required: true });
         core.saveState(State.CachePrimaryKey, primaryKey);
+
+        if(core.getInput(Inputs.SkipRestore)==='yes'){
+            core.info("Skipping restore of cache as skip-restore is set to "+ core.getInput(Inputs.SkipRestore));
+            return;
+        }
 
         const restoreKeys = utils.getInputAsArray(Inputs.RestoreKeys);
         const cachePaths = utils.getInputAsArray(Inputs.Path, {

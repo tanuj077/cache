@@ -48970,10 +48970,7 @@ const utils = __importStar(__webpack_require__(443));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            if (!utils.isCacheFeatureAvailable() || core.getInput(constants_1.Inputs.SkipRestore) === 'yes') {
-                if (core.getInput(constants_1.Inputs.SkipRestore) === 'yes') {
-                    core.info("Skipping restore of cache as skip-restore is set to " + core.getInput(constants_1.Inputs.SkipRestore));
-                }
+            if (!utils.isCacheFeatureAvailable()) {
                 utils.setCacheHitOutput(false);
                 return;
             }
@@ -48984,6 +48981,10 @@ function run() {
             }
             const primaryKey = core.getInput(constants_1.Inputs.Key, { required: true });
             core.saveState(constants_1.State.CachePrimaryKey, primaryKey);
+            if (core.getInput(constants_1.Inputs.SkipRestore) === 'yes') {
+                core.info("Skipping restore of cache as skip-restore is set to " + core.getInput(constants_1.Inputs.SkipRestore));
+                return;
+            }
             const restoreKeys = utils.getInputAsArray(constants_1.Inputs.RestoreKeys);
             const cachePaths = utils.getInputAsArray(constants_1.Inputs.Path, {
                 required: true

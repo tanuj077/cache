@@ -17,6 +17,9 @@ inputs:
   skip-save:
     description: 'An explicit key for skipping the cache save'
     required: false
+  skip-restore:
+    description: 'An explicit key for skipping the cache save'
+    required: false
 outputs:
   cache-hit:
     description: 'A boolean value to indicate an exact match was found for the primary key'

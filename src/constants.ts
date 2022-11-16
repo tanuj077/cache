@@ -3,7 +3,8 @@ export enum Inputs {
     Path = "path",
     RestoreKeys = "restore-keys",
     UploadChunkSize = "upload-chunk-size",
-    SkipSave = "skip-save"
+    SkipSave = "skip-save",
+    SkipRestore = "skip-restore"
 }
 
 export enum Outputs {

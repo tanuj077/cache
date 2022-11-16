@@ -6,7 +6,10 @@ import * as utils from "./utils/actionUtils";
 
 async function run(): Promise<void> {
     try {
-        if (!utils.isCacheFeatureAvailable()) {
+        if (!utils.isCacheFeatureAvailable() || core.getInput(Inputs.SkipSave)==='yes') {
+            if(core.getInput(Inputs.SkipSave)==='yes'){
+                core.info("Skipping restore of cache as skip-restore is set to "+ core.getInput(Inputs.SkipSave));
+            }
             utils.setCacheHitOutput(false);
             return;
         }

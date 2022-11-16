@@ -13,7 +13,7 @@ async function run(): Promise<void> {
     try {
         if (!utils.isCacheFeatureAvailable() || core.getInput(Inputs.SkipSave)==='yes') {
             if(core.getInput(Inputs.SkipSave)==='yes'){
-                utils.logWarning("Not saving the cache as skip-save is: "+ core.getInput(Inputs.SkipSave))
+                core.info("Not saving the cache as skip-save is: "+ core.getInput(Inputs.SkipSave));
             }
             return;
         }

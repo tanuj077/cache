@@ -5,7 +5,8 @@ export enum Inputs {
     UploadChunkSize = "upload-chunk-size",
     SkipSave = "skip-save",
     SkipRestore = "skip-restore",
-    SaveCacheOnAnyFailure = "SAVE_CACHE_ON_ANY_FAILURE"
+    SaveCacheOnAnyFailure = "SAVE_CACHE_ON_ANY_FAILURE",
+    StrictRestore = "strict-restore"
 }
 
 export enum Outputs {
@@ -21,6 +22,10 @@ export enum Events {
     Key = "GITHUB_EVENT_NAME",
     Push = "push",
     PullRequest = "pull_request"
+}
+
+export enum Variables {
+    SaveCacheOnAnyFailure = "SAVE_CACHE_ON_ANY_FAILURE"
 }
 
 export const RefKey = "GITHUB_REF";

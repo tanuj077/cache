@@ -4940,7 +4940,7 @@ exports.checkBypass = checkBypass;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RefKey = exports.Events = exports.State = exports.Outputs = exports.Inputs = void 0;
+exports.RefKey = exports.Variables = exports.Events = exports.State = exports.Outputs = exports.Inputs = void 0;
 var Inputs;
 (function (Inputs) {
     Inputs["Key"] = "key";
@@ -4949,6 +4949,8 @@ var Inputs;
     Inputs["UploadChunkSize"] = "upload-chunk-size";
     Inputs["SkipSave"] = "skip-save";
     Inputs["SkipRestore"] = "skip-restore";
+    Inputs["SaveCacheOnAnyFailure"] = "SAVE_CACHE_ON_ANY_FAILURE";
+    Inputs["StrictRestore"] = "strict-restore";
 })(Inputs = exports.Inputs || (exports.Inputs = {}));
 var Outputs;
 (function (Outputs) {
@@ -4965,6 +4967,10 @@ var Events;
     Events["Push"] = "push";
     Events["PullRequest"] = "pull_request";
 })(Events = exports.Events || (exports.Events = {}));
+var Variables;
+(function (Variables) {
+    Variables["SaveCacheOnAnyFailure"] = "SAVE_CACHE_ON_ANY_FAILURE";
+})(Variables = exports.Variables || (exports.Variables = {}));
 exports.RefKey = "GITHUB_REF";
 
 
@@ -48990,6 +48996,11 @@ function run() {
                 required: true
             });
             const cacheKey = yield cache.restoreCache(cachePaths, primaryKey, restoreKeys);
+            const saveCache = core.getInput(constants_1.Inputs.SaveCacheOnAnyFailure);
+            if (saveCache === "yes") {
+                core.exportVariable(constants_1.Variables.SaveCacheOnAnyFailure, saveCache);
+                core.info(`Input Variable ${constants_1.Variables.SaveCacheOnAnyFailure} is set to yes, the cache will be saved despite of any failure in the build.`);
+            }
             if (!cacheKey) {
                 core.info(`Cache not found for input keys: ${[
                     primaryKey,
@@ -49001,6 +49012,9 @@ function run() {
             utils.setCacheState(cacheKey);
             const isExactKeyMatch = utils.isExactKeyMatch(primaryKey, cacheKey);
             utils.setCacheHitOutput(isExactKeyMatch);
+            if (!isExactKeyMatch && core.getInput(constants_1.Inputs.StrictRestore) == "true") {
+                core.info("Exact key not found and strict-restore is set to yes, hence exitting the workflow.");
+            }
             core.info(`Cache restored from key: ${cacheKey}`);
         }
         catch (error) {

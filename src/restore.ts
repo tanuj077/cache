@@ -1,12 +1,11 @@
 import * as cache from "@actions/cache";
 import * as core from "@actions/core";
 
-import { Events, Inputs, State } from "./constants";
+import { Events, Inputs, State, Variables } from "./constants";
 import * as utils from "./utils/actionUtils";
 
 async function run(): Promise<void> {
     try {
-        core.debug("restore method ran, save cache on failue:"+ Inputs.SaveCacheOnAnyFailure);
         if (!utils.isCacheFeatureAvailable()) {
             utils.setCacheHitOutput(false);
             return;
@@ -40,6 +39,12 @@ async function run(): Promise<void> {
             restoreKeys
         );
 
+        const saveCache = core.getInput(Inputs.SaveCacheOnAnyFailure);
+        if (saveCache === "yes") {
+            core.exportVariable(Variables.SaveCacheOnAnyFailure, saveCache);
+            core.info(`Input Variable ${Variables.SaveCacheOnAnyFailure} is set to yes, the cache will be saved despite of any failure in the build.`);
+        }
+
         if (!cacheKey) {
             core.info(
                 `Cache not found for input keys: ${[
@@ -56,6 +61,11 @@ async function run(): Promise<void> {
 
         const isExactKeyMatch = utils.isExactKeyMatch(primaryKey, cacheKey);
         utils.setCacheHitOutput(isExactKeyMatch);
+
+        if (!isExactKeyMatch && core.getInput(Inputs.StrictRestore) == "true") {
+            core.info("Exact key not found and strict-restore is set to yes, hence exitting the workflow.")
+        }
+
         core.info(`Cache restored from key: ${cacheKey}`);
     } catch (error: unknown) {
         core.setFailed((error as Error).message);

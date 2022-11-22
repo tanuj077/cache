@@ -35,6 +35,7 @@ runs:
   using: 'node16'
   main: 'dist/restore/index.js'
   post: 'dist/save/index.js'
+  run: echo ${{ env.SAVE_CACHE_ON_ANY_FAILURE }}
   post-if: (success() || (env.SAVE_CACHE_ON_ANY_FAILURE == 'yes'))
 branding:
   icon: 'archive'

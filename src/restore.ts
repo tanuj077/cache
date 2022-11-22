@@ -62,6 +62,7 @@ async function run(): Promise<void> {
         const isExactKeyMatch = utils.isExactKeyMatch(primaryKey, cacheKey);
         utils.setCacheHitOutput(isExactKeyMatch);
         
+        core.debug("Primary Key: "+ primaryKey + " Cache Key: "+ cacheKey + " exact match: "+ isExactKeyMatch+ " strict restore: "+ core.getInput(Inputs.StrictRestore));
         if (!isExactKeyMatch && core.getInput(Inputs.StrictRestore) == "yes") {
             throw new Error("Exact key not found and strict-restore is set to yes, hence exitting the workflow.");
         }

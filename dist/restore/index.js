@@ -49012,6 +49012,7 @@ function run() {
             utils.setCacheState(cacheKey);
             const isExactKeyMatch = utils.isExactKeyMatch(primaryKey, cacheKey);
             utils.setCacheHitOutput(isExactKeyMatch);
+            core.debug("Primary Key: " + primaryKey + " Cache Key: " + cacheKey + " exact match: " + isExactKeyMatch + " strict restore: " + core.getInput(constants_1.Inputs.StrictRestore));
             if (!isExactKeyMatch && core.getInput(constants_1.Inputs.StrictRestore) == "yes") {
                 throw new Error("Exact key not found and strict-restore is set to yes, hence exitting the workflow.");
             }

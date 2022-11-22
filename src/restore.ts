@@ -1,7 +1,7 @@
 import * as cache from "@actions/cache";
 import * as core from "@actions/core";
 
-import { Events, Inputs, State, Variables } from "./constants";
+import { Events, Inputs, State } from "./constants";
 import * as utils from "./utils/actionUtils";
 
 async function run(): Promise<void> {
@@ -41,8 +41,8 @@ async function run(): Promise<void> {
 
         const saveCache = core.getInput(Inputs.SaveCacheOnAnyFailure);
         if (saveCache === "yes") {
-            core.exportVariable(Variables.SaveCacheOnAnyFailure, saveCache);
-            core.info(`Input Variable ${Variables.SaveCacheOnAnyFailure} is set to yes, the cache will be saved despite of any failure in the build.`);
+            core.exportVariable(Inputs.SaveCacheOnAnyFailure, saveCache);
+            core.info(`Input Variable ${Inputs.SaveCacheOnAnyFailure} is set to yes, the cache will be saved despite of any failure in the build.`);
         }
 
         if (!cacheKey) {

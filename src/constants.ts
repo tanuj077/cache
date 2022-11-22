@@ -24,8 +24,4 @@ export enum Events {
     PullRequest = "pull_request"
 }
 
-export enum Variables {
-    SaveCacheOnAnyFailure = "SAVE_CACHE_ON_ANY_FAILURE"
-}
-
 export const RefKey = "GITHUB_REF";

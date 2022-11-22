@@ -6,6 +6,7 @@ import * as utils from "./utils/actionUtils";
 
 async function run(): Promise<void> {
     try {
+        core.debug("restore method ran");
         if (!utils.isCacheFeatureAvailable()) {
             utils.setCacheHitOutput(false);
             return;
